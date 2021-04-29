@@ -10,8 +10,6 @@ var enemyNames = ["Roborto", "Amy Andorid", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-window.alert("Welcome to Robort Gladiators")
-
 var fight = function(enemyName) {
     //repeat and executive as long as the enemy-robot is alive. 
     while (enemyHealth > 0 && playerHealth > 0) {
@@ -63,9 +61,8 @@ var fight = function(enemyName) {
         console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining ");
 
         //check enemy's health
-        if (playerHealth <=0) {
+        if (playerHealth <= 0) {
             window.alert(playerName + " has died");
-            break;
         }
 
         else {
@@ -139,8 +136,23 @@ var fight = function(enemyName) {
 
 
 for (var i = 0; i < enemyNames.length; i++) {
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    //call fight funtion with enemy robot
-    fight(pickedEnemyName);
+    if (playerHealth > 0) {
+        //let the player know what round they are in
+        window.alert("Welcome to Robort Gladiators! Round " + (i + 1));
+
+        //pick new each enemy when the old enemy is defeted
+        var pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+
+        //use debugger to push the script from running and check wha's going on.
+        //debugger;
+
+        //call fight funtion with enemy robot
+        fight(pickedEnemyName);
+        // if player isn't alive, stop the game
+    } else {
+        window.alert("You have lost your robot in battle! GAME OVER!");
+        break;
+    }
+   
 }
