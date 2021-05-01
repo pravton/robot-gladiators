@@ -13,6 +13,7 @@ var enemyAttack = 12;
 var fight = function(enemyName) {
     //repeat and executive as long as the enemy-robot is alive. 
     while (enemyHealth > 0 && playerHealth > 0) {
+        console.log("Test")
     //Ask the question
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose"); 
 
@@ -73,6 +74,71 @@ var fight = function(enemyName) {
         
 
 }
+
+//wrap the game logic in a startGame() function
+var startGame = function() { 
+    //reset player stats
+    playerHealth = 100;
+    playerAttck = 10;
+    playerMoney = 10;
+
+    for (var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth > 0) {
+            //let the player know what round they are in
+            window.alert("Welcome to Robort Gladiators! Round " + (i + 1));
+    
+            //pick new each enemy when the old enemy is defeted
+            var pickedEnemyName = enemyNames[i];
+            enemyHealth = 50;
+    
+            //use debugger to push the script from running and check wha's going on.
+            //debugger;
+    
+            //call fight funtion with enemy robot
+            fight(pickedEnemyName);
+            // if player isn't alive, stop the game
+        } else {
+            window.alert("You have lost your robot in battle! GAME OVER!");
+            break;
+        }
+       
+    }
+
+    //play again
+    endGame();
+};
+
+//function to end the entire game
+var endGame = function () {
+    if (playerHealth > 0) {
+        window.alert("The game now ended. Lets see how you did!");
+    }
+    else {
+        window.alert("You've lost your robot in battle");
+    }
+    
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+
+    if (playAgainConfirm) {
+        //restart the game
+        startGame();
+    }
+    else{
+        window.alert("Thank you for playing Robort Gladiators! Come back soon!")
+    }
+}
+
+    // Start Game  
+    startGame();
+
+
+//when the player is defeated or there are no more enemies, call and endGame() funtion that:
+//alerts the plaer's total statls
+//Asks the player if they want to play again
+//If yes, call startGame() to restart the game
+
+
+
 /*
 var fight = function(enemyName) {
     while (playerHealth > 0 && enemyHealth > 0) {
@@ -134,25 +200,3 @@ var fight = function(enemyName) {
     }
 }*/
 
-
-for (var i = 0; i < enemyNames.length; i++) {
-    if (playerHealth > 0) {
-        //let the player know what round they are in
-        window.alert("Welcome to Robort Gladiators! Round " + (i + 1));
-
-        //pick new each enemy when the old enemy is defeted
-        var pickedEnemyName = enemyNames[i];
-        enemyHealth = 50;
-
-        //use debugger to push the script from running and check wha's going on.
-        //debugger;
-
-        //call fight funtion with enemy robot
-        fight(pickedEnemyName);
-        // if player isn't alive, stop the game
-    } else {
-        window.alert("You have lost your robot in battle! GAME OVER!");
-        break;
-    }
-   
-}
