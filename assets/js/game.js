@@ -13,7 +13,6 @@ var enemyAttack = 12;
 var fight = function(enemyName) {
     //repeat and executive as long as the enemy-robot is alive. 
     while (enemyHealth > 0 && playerHealth > 0) {
-        console.log("Test")
     //Ask the question
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose"); 
 
@@ -73,7 +72,7 @@ var fight = function(enemyName) {
     }
         
 
-}
+};
 
 //wrap the game logic in a startGame() function
 var startGame = function() { 
@@ -96,6 +95,18 @@ var startGame = function() {
     
             //call fight funtion with enemy robot
             fight(pickedEnemyName);
+
+            //if we 're not at the ;ast enemy in the array
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                //ask the player if they want to use the shop before going to the next roung
+                var storeConfirm = window.confirm("The fight is over, visit the shop before the next round?")
+
+                //if yes, confirm with the store
+                if (storeConfirm) {
+                    shop();
+                }
+                
+            }
             // if player isn't alive, stop the game
         } else {
             window.alert("You have lost your robot in battle! GAME OVER!");
@@ -124,9 +135,63 @@ var endGame = function () {
         startGame();
     }
     else{
-        window.alert("Thank you for playing Robort Gladiators! Come back soon!")
+        window.alert("Thank you for playing Robort Gladiators! Come back soon!");
     }
-}
+};
+
+var shop = function() {
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, upgrade your attack, or LEAVE the store? Please enter one 'REFILL'. 'UPGRADE', or 'LEAVE' to make choice."
+    );
+
+    //Using switch funtion to fillfil the shop feature
+    switch (shopOptionPrompt) {
+        case "REFILL":
+        case "refill":
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+
+                //increase health and decrease money
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You do not have enaugh money!");
+            }
+            
+            break;
+
+        case "UPGRADE":
+        case "upgrade": 
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                //increase player attach and decrease money
+                playerAttck = playerAttck + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You do not have enaugh money");
+            }
+           
+            
+            break;
+
+        case "LEAVE":
+        case "leave": 
+            window.alert("Leaving the store.");
+
+            //do nothing, so the funtion will end
+            break;
+
+        default: 
+            window.alert("You did not pick a valid option. Try again.");
+
+            //call shop( again to force player to pick a valid option)
+            shop();
+            break;
+    }
+};
 
     // Start Game  
     startGame();
