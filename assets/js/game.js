@@ -7,26 +7,45 @@ var randomNumber = function(min, max) {
     return value;
 }
 
+var fightOrSkip = function() {
+    //Ask the question
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose"); 
+
+    //If the "promtFight" is not a valid value, than execute the following statements
+    if (!promptFight) {
+        window.alert("You need to provide a valid response! Please try again.")
+        return fightOrSkip();
+    }
+
+    promptFight = promptFight.toLowerCase();
+
+    if (promptFight === "skip" || promptFight === "SKIP") {
+        //confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        //if yes, leave the fight
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to quit this fight. Goodbye!");
+            //subtract money from playerInfo.money for skipping
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            // return if player wants to leave.
+            return true;
+
+            shop();
+        }
+    }  
+}
+
+
 var fight = function(enemy) {
     //repeat and executive as long as the enemy-robot is alive. 
     while (enemy.health > 0 && playerInfo.health > 0) {
     //Ask the question
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose"); 
-
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            //confirm player wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-        
-            //if yes, leave the fight
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has decided to quit this fight. Goodbye!");
-                //subtract money from playerInfo.money for skipping
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("Player Money", playerInfo.money);
-                break;
-            }   
-        } 
-
+        if (fightOrSkip()) {
+        //if true leave fight by breaking the loop.
+        break;
+        }
+         
         /*//if player choose to fight, then fight
         if (promptFight === "fight" || promptFight === "FIGHT") {*/
         //Subtrack the value of "playerInfo.attack" from the value of "enemy.health" and use that result to update the value in the "enemy.health" variable
@@ -159,13 +178,25 @@ var shop = function() {
     }
 };
 
+//Funtion to set a player name
+var getPlayerName = function() {
+    var name = "";
+
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?")
+    }
+
+    console.log("Your robot's name is " + name);
+    return name;
+}; 
+
 /* GAME LOGIC END */
 
 /* GAME INFORMATION / VARIABLES */
 
 // Player information
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
