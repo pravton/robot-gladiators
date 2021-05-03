@@ -147,7 +147,26 @@ var startGame = function() {
 //function to end the entire game
 var endGame = function () {
     if (playerInfo.health > 0) {
-        window.alert("The game now ended. Lets see how you did! You now have a score of " + playerInfo.money + '.');
+        window.alert("The game now ended. Lets see how you did!");
+        
+        //log the highscore to local storage
+        var highScore = localStorage.getItem("HighScore", playerInfo.money);
+
+        if (highScore === null) {
+            highScore = 0;
+        }
+        
+        //if the highcore is highier than the local score 
+        if (playerInfo.money > highScore) {
+            localStorage.setItem("highscore", playerInfo.money);
+            localStorage.setItem("name", playerInfo.name);
+
+            alert(playerInfo.name + " now has the highier score of " + highScore + " !");
+        }
+        else {
+            alert(playerInfo.name + " did not beat the highier score of " + playerInfo.money + " ! Better luck next time!");
+        }
+
     }
     else {
         window.alert("You've lost your robot in battle");
@@ -220,8 +239,8 @@ var playerInfo = {
     money: 10,
     reset: function() {
         this.health = 100;
-        this.money = 10;
-        this.attack = 10;
+        this.money = 100;
+        this.attack = 50;
     },
     refillHealth: function() {
         if (this.money >= 7) {
